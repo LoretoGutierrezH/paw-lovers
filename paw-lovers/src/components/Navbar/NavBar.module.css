@@ -1,0 +1,42 @@
+.navbar {
+  background-color: #81D2CB;
+  display: flex;
+  min-height: 10vh;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.logoContainer {
+  width: 9rem;
+}
+
+.logoContainer > img {
+  width: 100%;
+}
+
+.burgerMenuIcon {
+  position: relative;
+  left: 18rem;
+}
+
+#burgerMenu {
+  position: absolute;
+  top: 6rem;
+  left: 18rem;
+  width: 13rem;
+  background-color: white;
+}
+
+ul#burgerMenu > a {
+  list-style: none;
+  font-size: 1.5rem;
+}
+
+.openMenu {
+  display: block;
+}
+
+.closedMenu {
+  display: none;
+}

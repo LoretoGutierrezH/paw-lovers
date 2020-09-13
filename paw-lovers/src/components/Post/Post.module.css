@@ -1,0 +1,35 @@
+.post {
+  background-color: white;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #81D2CB;
+}
+
+.heading {
+  background-color: #B2CE35;
+  padding: 1rem;
+
+}
+
+
+.contentArea {
+  background-color: red;
+  padding: 1rem;
+
+}
+
+.interactionContainer {
+  background-color: green;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 5rem;
+}
+
+.interactionContainer > button {
+  height: 2rem;
+  border: none;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+}
