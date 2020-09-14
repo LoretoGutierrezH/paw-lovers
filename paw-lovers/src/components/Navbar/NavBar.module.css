@@ -18,20 +18,20 @@
 
 .authenticationIcon {
   position: absolute;
-  left: 21rem;
+  right: 8rem;
 }
 
 .burgerMenuIcon {
-  position: relative;
-  left: 18rem;
+  position: absolute;
+  right: 1rem;
 }
 
 #burgerMenu {
   position: absolute;
   top: 6rem;
-  left: 18rem;
   width: 13rem;
   background-color: #81D2CB;
+  right: 0rem;
 }
 
 ul#burgerMenu > a {

@@ -14,9 +14,9 @@ const Post = (props) => {
         </p>
       </section>
       <div className={style.interactionContainer}>
-        <button className={style.interactionOption}>Me gusta</button>
-        <button className={style.interactionOption}>Comentar</button>
-        <button className={style.interactionOption}>Compartir</button>
+        <button className="custom-btn green-btn">Me gusta</button>
+        <button className="custom-btn green-btn">Comentar</button>
+        <button className="custom-btn green-btn">Compartir</button>
       </div>
     </article>
   );

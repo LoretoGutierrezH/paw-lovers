@@ -27,7 +27,7 @@ const Posts = (props) => {
   return (
     <main className={style.postsContainer}>
       <section className={style.newPostControl}>
-        <button className={style.newPostBtn}>Nueva publicación</button>
+        <button className="custom-btn green-btn">Nueva publicación</button>
       </section>
       <Post
         id={post.id}

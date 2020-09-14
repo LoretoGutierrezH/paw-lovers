@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './AuthModal.module.css';
 import * as actionTypes from '../../store/authActions';
 import { connect } from 'react-redux';
 const AuthModal = (props) => {
-  console.log('AuthModal.jsx', props.authModal);
+  const [formState, setFormState] = useState('sign-in');
+
+  const showForm = (event) => {
+    console.log(event.target);
+  }
   return (
-    <article className={props.authModal === false ? `${style.modalWrapper} ${style.inactive}` : `${style.modalWrapper} ${style.active}`}>
+    <article className={props.authModal === false ? `${style.modalWrapper} inactive` : `${style.modalWrapper} active`}>
       <h1>Soy un modal de inicio de sesión/registro</h1>
       <h1 onClick={props.onActivateModal} className={style.closeModalIcon}>&times;</h1>
       <section className={style.modal}>
@@ -17,12 +21,12 @@ const AuthModal = (props) => {
         </header>
         <section className={style.modalContent}>
           <form className={style.signInForm}>
-            <input type="email" name="email" placholder="Correo" />
+            <input type="email" name="email" placeholder="Correo" />
             <input type="password" name="password" placeholder="Contraseña" />
             <button className={style.authBtn}>Iniciar sesión</button>
           </form>
-          <form className={style.signUpForm}>
-            <input type="email" name="email" placholder="Correo" />
+          <form className={formState === 'sign-in' ? `${style.signUpForm} inactive` : `${style.signUpForm} active`}>
+            <input type="email" name="email" placeholder="Correo" />
             <input type="password" name="password" placeholder="Contraseña" />
             <button className={style.authBtn}>Registrarse</button>
           </form>
