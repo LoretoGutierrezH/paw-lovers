@@ -5,9 +5,15 @@ import { connect } from 'react-redux';
 const AuthModal = (props) => {
   const [formState, setFormState] = useState('sign-in');
 
-  const showForm = (event) => {
-    console.log(event.target);
+  const tabActivationHandler = (event) => {
+    console.log(event.target.id);
+    if (event.target.id === 'sign-up-form') {
+      setFormState('sign-up');
+    } else {
+      setFormState('sign-in');
+    }
   }
+
   return (
     <article className={props.authModal === false ? `${style.modalWrapper} inactive` : `${style.modalWrapper} active`}>
       <h1>Soy un modal de inicio de sesión/registro</h1>
@@ -15,22 +21,22 @@ const AuthModal = (props) => {
       <section className={style.modal}>
         <header className={style.modalHeader}>
           <nav className={style.modalNavbar}>
-            <p>Iniciar sesión</p>
-            <p>Registro</p>
+            <p id="sign-in-form" onClick={(event) => tabActivationHandler(event)} className={style.activeTab} className={formState === 'sign-in' ? `${style.activeTab}` : `${style.inactiveTab}`}>Iniciar sesión</p>
+            <p id="sign-up-form" onClick={(event) => tabActivationHandler(event)} className={formState === 'sign-up' ? `${style.activeTab}` : `${style.inactiveTab}`}>Registro</p>
           </nav>
         </header>
         <section className={style.modalContent}>
-          <form className={style.signInForm}>
-            <input type="email" name="email" placeholder="Correo" />
-            <input type="password" name="password" placeholder="Contraseña" />
-            <button className={style.authBtn}>Iniciar sesión</button>
+          <form className={formState === 'sign-up' ? `${style.signInForm} ${style.inactive}` : `${style.signInForm} ${style.active}`}>
+            <input type="email" name="email" placeholder="Correo" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button className={`custom-btn green-btn ${style.btn}`}>Iniciar sesión</button>
           </form>
-          <form className={formState === 'sign-in' ? `${style.signUpForm} inactive` : `${style.signUpForm} active`}>
-            <input type="email" name="email" placeholder="Correo" />
-            <input type="password" name="password" placeholder="Contraseña" />
-            <button className={style.authBtn}>Registrarse</button>
+          <form className={formState === 'sign-in' ? `${style.signUpForm} ${style.inactive}` : `${style.signUpForm} ${style.active}`}>
+            <input type="email" name="email" placeholder="Correo" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button className={`custom-btn green-btn ${style.btn}`}>Registrarse</button>
           </form>
-          <p className={style.authenticationMessage}></p>
+          <p className={style.authenticationMessage}>Mensaje de registro/inicio de sesión</p>
         </section>
       </section>
     </article>
