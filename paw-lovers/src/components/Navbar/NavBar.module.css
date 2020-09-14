@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  position: fixed;
 }
 
 .logoContainer {
@@ -13,6 +14,11 @@
 
 .logoContainer > img {
   width: 100%;
+}
+
+.authenticationIcon {
+  position: absolute;
+  left: 21rem;
 }
 
 .burgerMenuIcon {
@@ -25,12 +31,23 @@
   top: 6rem;
   left: 18rem;
   width: 13rem;
-  background-color: white;
+  background-color: #81D2CB;
 }
 
 ul#burgerMenu > a {
   list-style: none;
   font-size: 1.5rem;
+  color: grey;
+  text-decoration: none;
+}
+
+ul#burgerMenu > a > li {
+  padding: .5rem;
+}
+
+ul#burgerMenu > a > li:hover {
+  background-color: #668683;
+  color: white;
 }
 
 .openMenu {

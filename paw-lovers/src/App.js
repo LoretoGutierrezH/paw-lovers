@@ -1,13 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Posts from './containers/Posts/Posts.jsx';
 import NavBar from './components/Navbar/NavBar.jsx';
+import AuthModal from './containers/AuthModal/AuthModal.jsx';
+import NewPost from './containers/NewPost/NewPost.jsx';
+import Posts from './containers/Posts/Posts.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import style from './App.module.css';
-const App = () => {
+import { connect } from 'react-redux';
+
+
+const App = (props) => {
+  console.log('APP.jsx', props.authModal);
   return (
     <Router>
       <NavBar />
+      <AuthModal />
       <Switch>
         <Route path="/" component={Posts} exact />
         <Route path="/:category" component={Posts} />
@@ -18,6 +25,8 @@ const App = () => {
         <Route path="/concurso" component={Posts} />
         <Route path="/panel-de-control" component={Posts} /> */}
       </Switch>
+      <button>REGISTRARSE</button>
+
       <div>
         
       </div>
@@ -27,4 +36,14 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    authModal: state.authModal
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+}
+
+export default connect(mapStateToProps)(App);

@@ -1,4 +1,18 @@
 .postsContainer {
   min-height: 100vh;
   background-color: white;
+  padding: 9rem 0;
+}
+
+.newPostControl {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.newPostBtn {
+  border: none;
+  padding: 1rem;
+  background-color: #8BC34A;
+  color: white;
 }

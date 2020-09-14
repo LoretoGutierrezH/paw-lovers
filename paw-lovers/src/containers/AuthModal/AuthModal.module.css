@@ -1,0 +1,30 @@
+.modalWrapper {
+  position: absolute;
+  background-color: #808080b0;
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  background-color: green;
+  width: 24rem;
+  margin: 2rem auto;
+  
+
+}
+
+.closeModalIcon {
+  position: absolute;
+  right: 2rem;
+}
+
+.modalContent {
+}
+
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
