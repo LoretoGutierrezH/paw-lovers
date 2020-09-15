@@ -15,13 +15,10 @@ const NavBar = (props) => {
   const openBurgerMenu = () => {
     burgerMenuState === 'closed' ? setBurgerMenuState('open') : setBurgerMenuState('closed');
   }
-  setTimeout(() => {
-    console.log("NAVBAR.JSX", props.authenticated);
-  }, 2000);
 
   return (
     <nav className={style.navbar}>
-      <Link to="/">
+      <Link to="/inicio">
         <div className={style.logoContainer}>
           <img src={PawLovers} alt="Inicio" />
         </div>

@@ -8,20 +8,8 @@ import Footer from './components/Footer/Footer.jsx';
 import style from './App.module.css';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/authActions';
-import * as firebase from "firebase";
+import firebase from './Firebase';
 
-// Firebase config
-var firebaseConfig = {
-  apiKey: "AIzaSyA8PUJL2pZj7Vy0602V22CkvLmgyRwCnYY",
-  authDomain: "paw-lovers-2.firebaseapp.com",
-  databaseURL: "https://paw-lovers-2.firebaseio.com",
-  projectId: "paw-lovers-2",
-  storageBucket: "paw-lovers-2.appspot.com",
-  messagingSenderId: "443458945688",
-  appId: "1:443458945688:web:f229528639de085d3446ed",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
@@ -67,6 +55,10 @@ const App = (props) => {
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithPopup(provider);
+        props.onAuthenticate(true);
+        setTimeout(() => {
+          props.onActivateModal();
+        }, 3000);
         console.log('Sesión iniciada con Google correctamente');
       } catch (error) {
         console.log(error);
@@ -88,7 +80,7 @@ const App = (props) => {
       <NavBar signOut={signOutHandler} />
       <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
       <Switch>
-        <Route path="/" component={Posts} exact />
+        <Route path="/:category/nueva-publicación" component={NewPost}/>
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />
         <Route path="/cuidados-40tena" component={Posts} />

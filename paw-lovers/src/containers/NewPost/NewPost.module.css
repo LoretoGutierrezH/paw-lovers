@@ -1,3 +1,5 @@
 .newPost {
-  padding-top: 10rem;
+  min-height: 100vh;
+  background-color: white;
+  padding: 9rem 0;
 }

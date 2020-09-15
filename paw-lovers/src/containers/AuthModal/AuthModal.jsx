@@ -7,7 +7,6 @@ const AuthModal = (props) => {
   const [formState, setFormState] = useState('sign-in');
 
   const tabActivationHandler = (event) => {
-    console.log(event.target.id);
     if (event.target.id === 'sign-up-form') {
       setFormState('sign-up');
     } else {
