@@ -84,3 +84,20 @@
 .signInForm > .btn, .signUpForm > .btn {
   cursor: pointer;
 }
+
+.googleBtn {
+  border: none;
+  background-color: transparent;
+  width: 3rem;
+  margin: 1rem auto;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
+
+.googleBtn:hover {
+  transform: scale(1.1);
+}
+
+.googleBtn > img {
+  width: 100%;
+}

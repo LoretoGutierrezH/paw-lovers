@@ -63,7 +63,15 @@ const App = (props) => {
   }
 
   // Gmail authentication
-
+  const singInGoogle = async () => {
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+        console.log('Sesión iniciada con Google correctamente');
+      } catch (error) {
+        console.log(error);
+      }
+  };
 
   // Authentication observer
   auth.onAuthStateChanged(user => {
@@ -78,7 +86,7 @@ const App = (props) => {
   return (
     <Router>
       <NavBar signOut={signOutHandler} />
-      <AuthModal signIn={signInHandler} signUp={signUpHandler}/>
+      <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
       <Switch>
         <Route path="/" component={Posts} exact />
         <Route path="/:category" component={Posts} />

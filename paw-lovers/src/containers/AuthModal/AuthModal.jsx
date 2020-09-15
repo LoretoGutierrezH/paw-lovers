@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import style from './AuthModal.module.css';
 import * as actionTypes from '../../store/authActions';
+import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import { connect } from 'react-redux';
 const AuthModal = (props) => {
   const [formState, setFormState] = useState('sign-in');
@@ -29,6 +30,7 @@ const AuthModal = (props) => {
             <input type="email" name="email" placeholder="Correo" required />
             <input type="password" name="password" placeholder="Contraseña" required />
             <button type="submit" className={`custom-btn green-btn ${style.btn}`}>Iniciar sesión</button>
+            <button className={style.googleBtn} onClick={props.signInGoogle}><img src={GoogleLogo} alt=""/></button>
           </form>
           <form onSubmit={(event) => {event.preventDefault(); props.signUp(event);}}className={formState === 'sign-in' ? `${style.signUpForm} ${style.inactive}` : `${style.signUpForm} ${style.active}`}>
             <input type="email" name="email" placeholder="Correo" required />
