@@ -19,11 +19,14 @@
 .authenticationIcon {
   position: absolute;
   right: 8rem;
+  cursor: pointer;
 }
 
 .burgerMenuIcon {
   position: absolute;
   right: 1rem;
+  cursor: pointer;
+
 }
 
 #burgerMenu {
