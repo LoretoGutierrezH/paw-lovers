@@ -79,7 +79,8 @@ const App = (props) => {
     <Router>
       <NavBar signOut={signOutHandler} />
       <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
-      <Switch>
+      <Switch> 
+        <Route path="/" component={Posts} exact />
         <Route path="/:category/nueva-publicación" component={NewPost}/>
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />

@@ -5,11 +5,11 @@ const Post = (props) => {
   return (
     <article className={style.post}>
       <section className={style.postContent}>
-        <h2 className={style.heading}>Título: {props.heading}</h2>
+        <h2 className={style.heading}>{props.title}</h2>
         <h3 className={style.heading}>Categoría: {props.category}</h3>
-        <h3 className={style.heading}>Autor: Pablo</h3>
-        <h3 className={style.heading}>Me gusta: usuario1, usuario2, usuario3</h3>
-        <h3 className={style.heading}>Publicado: 13 de septiembre del 2020</h3>
+        <h3 className={style.heading}>Autor: {props.author}</h3>
+        <h3 className={style.heading}>Me gusta: {props.likes}</h3>
+        <h3 className={style.heading}>Publicado: {props.date}</h3>
         <p className={style.contentArea}>{props.content}
         </p>
       </section>

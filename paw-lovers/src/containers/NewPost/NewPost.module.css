@@ -2,4 +2,43 @@
   min-height: 100vh;
   background-color: white;
   padding: 9rem 0;
+  
+}
+
+.categoryContainer {
+  background-color: #8BC34A;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.newPost > form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin: 2rem auto;
+}
+
+.newPost > form > input, textarea {
+  width: 90%;
+  margin-top: 1rem;
+  border: 1px solid grey;
+
+}
+
+.newPost > form > button {
+  margin-top: 1rem;
+}
+
+.newPost > form > input {
+  padding: .5rem;
+}
+
+.newPost > form > textarea {
+  resize: none;
+  height: 30vh;
+  padding: .5rem;
 }

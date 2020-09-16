@@ -41,7 +41,7 @@ const NavBar = (props) => {
           burgerMenuState === "closed" ? style.closedMenu : style.openMenu
         }
       >
-        <Link to="/">
+        <Link to="/inicio">
           <li className="icon-container">
             <p>Inicio</p>
           </li>
