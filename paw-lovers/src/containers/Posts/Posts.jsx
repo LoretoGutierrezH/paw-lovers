@@ -9,7 +9,6 @@ const auth = firebase.auth();
 
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
-
   /* const formattingDate = (doc) => {
     const formattedDate = doc.data().timestamp.toDate().toString();
     const splitDate = formattedDate.split(" ");
@@ -26,11 +25,11 @@ const Posts = (props) => {
   let posts = [];
 
   useEffect(() => {
-    db.collection("Posts")
-      .where("category", "==", `${props.match.params.category}`)
-      .onSnapshot((docs) => {
-        docs.forEach((doc) => {
+    if (props.match.params.category === 'inicio') {
+      db.collection('Posts').onSnapshot((docs) => {
+        docs.forEach(doc => {
           const postObject = {
+            id: doc.id,
             author: doc.data().author,
             category: doc.data().category,
             comments: doc.data().comments,
@@ -40,41 +39,44 @@ const Posts = (props) => {
             title: doc.data().title,
           };
           posts.push(postObject);
+        })
+        setPostsState(posts); //tiene que estar aquí o posts = []
+      })
+      console.log("Después del primer render: UseEffect de Fetch solo para inicio");
+    } else {
+      db.collection("Posts")
+        .where("category", "==", `${props.match.params.category}`)
+        .onSnapshot((docs) => {
+          docs.forEach((doc) => {
+            const postObject = {
+              id: doc.id,
+              author: doc.data().author,
+              category: doc.data().category,
+              comments: doc.data().comments,
+              content: doc.data().content,
+              likes: doc.data().likes,
+              /* timestamp: formattingDate(doc), */
+              title: doc.data().title,
+            };
+            posts.push(postObject);
+          });
+          setPostsState(posts);
         });
-        setPostsState(posts);
-      });
-      console.log('UseEffect de Fetch');
+      console.log("Después del primer render: UseEffect de Fetch");
+    }
+    
   }, [props.match.params.category]);
 
   // Lógica provisoria de population de container Post
- /*  useEffect(() => {
-    console.log('Post state', postsState);
-
-    postsArray = postsState.map(post => {
-    return (<Post
-      key={post.id}
-      id={post.id}
-      category={post.category}
-      author={post.author}
-      title={post.title}
-      content={post.content}
-      likes={post.likes}
-      comments={post.comments}
-    />);
-    })
-
- 
-
-    console.log('Array de posts', postsArray);
-    
-    
-  }, [posts]); */
+  useEffect(() => {
+    console.log(postsState);
+  }, [postsState])
   let postsArray = null;
+
   postsArray = postsState.map(post => {
     return (
       <Post
         key={post.id}
-        id={post.id}
         category={post.category}
         author={post.author}
         title={post.title}
