@@ -9,25 +9,65 @@ const auth = firebase.auth();
 
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
-  /* const formattingDate = (doc) => {
+  const formattingDate = (doc) => {
+    console.log("Leyendo timestamp", doc.data());
     const formattedDate = doc.data().timestamp.toDate().toString();
     const splitDate = formattedDate.split(" ");
     // console.log(splitDate[1], splitDate[2], splitDate[3], splitDate[4]);
     let month;
-    if (splitDate[1].includes("Sep")) {
-      // porque solo es para mostrar :D xd
-      month = "Septiembre";
+    switch (splitDate[1]) {
+      case 'Jan':
+        month = "Enero";
+        break;
+      case 'Feb':
+        month = "Febrero";
+        break;
+      case 'Mar':
+        month = "Marzo";
+        break;
+      case 'Apr':
+        month = "Abril";
+        break;
+      case 'May':
+        month = "Mayo";
+        break;
+      case 'Jun':
+        month = "Junio";
+        break;
+      case 'Jul':
+        month = "Julio";
+        break;
+      case 'Aug':
+        month = "Agosto";
+        break;
+      case 'Sep':
+        month = "Septiembre";
+        break;
+      case 'Oct':
+        month = "Octubre";
+        break;
+      case 'Nov':
+        month = "Noviembre";
+        break;
+      case 'Dec':
+        month = "Dicimebre";
+        break;
+      default:
+        month = "Mes";
     }
-    // console.log(`${splitDate[2]} de ${month} del ${splitDate[3]} a las ${splitDate[4]}`);
     return `${splitDate[2]} de ${month} del ${splitDate[3]} a las ${splitDate[4]}`;
-  }; */
+  };
   // Lectura de posts y almacenamiento en estado
   let posts = [];
 
   useEffect(() => {
+    let unsuscribe;
     if (props.match.params.category === 'inicio') {
-      db.collection('Posts').onSnapshot((docs) => {
+      unsuscribe = db.collection('Posts').onSnapshot((docs) => {
         docs.forEach(doc => {
+          if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
+            console.log("EL DOCUMENTO TIENE LA HORA PENDIENTE", doc.data().id);
+          }
           const postObject = {
             id: doc.id,
             author: doc.data().author,
@@ -35,7 +75,7 @@ const Posts = (props) => {
             comments: doc.data().comments,
             content: doc.data().content,
             likes: doc.data().likes,
-            /* timestamp: formattingDate(doc), */
+            timestamp: !doc.data().timestamp && doc.metadata.hasPendingWrites ?  "Hora en proceso" : formattingDate(doc),
             title: doc.data().title,
           };
           posts.push(postObject);
@@ -44,10 +84,11 @@ const Posts = (props) => {
       })
       console.log("Después del primer render: UseEffect de Fetch solo para inicio");
     } else {
-      db.collection("Posts")
+      unsuscribe = db.collection("Posts")
         .where("category", "==", `${props.match.params.category}`)
         .onSnapshot((docs) => {
           docs.forEach((doc) => {
+
             const postObject = {
               id: doc.id,
               author: doc.data().author,
@@ -55,7 +96,7 @@ const Posts = (props) => {
               comments: doc.data().comments,
               content: doc.data().content,
               likes: doc.data().likes,
-              /* timestamp: formattingDate(doc), */
+              timestamp: !doc.data().timestamp && doc.metadata.hasPendingWrites ?  "Hora en proceso" : formattingDate(doc),
               title: doc.data().title,
             };
             posts.push(postObject);
@@ -64,6 +105,9 @@ const Posts = (props) => {
         });
       console.log("Después del primer render: UseEffect de Fetch");
     }
+
+    
+      //unsuscribe();
     
   }, [props.match.params.category]);
 
@@ -83,6 +127,8 @@ const Posts = (props) => {
         content={post.content}
         likes={post.likes}
         comments={post.comments}
+        date={post.timestamp}
+        
       />
     );
   })
