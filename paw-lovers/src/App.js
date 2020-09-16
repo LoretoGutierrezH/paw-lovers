@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import NavBar from './components/Navbar/NavBar.jsx';
 import AuthModal from './containers/AuthModal/AuthModal.jsx';
 import NewPost from './containers/NewPost/NewPost.jsx';
@@ -80,7 +80,7 @@ const App = (props) => {
       <NavBar signOut={signOutHandler} />
       <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
       <Switch> 
-        <Route path="/" component={Posts} exact />
+        {window.location.pathname === "/" ? <Redirect to="/inicio"></Redirect> : null}
         <Route path="/:category/nueva-publicación" component={NewPost}/>
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />
