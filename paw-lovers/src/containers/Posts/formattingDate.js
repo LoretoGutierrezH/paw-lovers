@@ -1,5 +1,4 @@
 export const formattingDate = (doc) => {
-  console.log("Leyendo timestamp", doc.data());
   const formattedDate = doc.data().timestamp.toDate().toString();
   const splitDate = formattedDate.split(" ");
   // console.log(splitDate[1], splitDate[2], splitDate[3], splitDate[4]);

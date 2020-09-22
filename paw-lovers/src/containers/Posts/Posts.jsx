@@ -11,14 +11,30 @@ const auth = firebase.auth();
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
   const [authState, setAuthState] = useState(false);
-  // Lectura de posts y almacenamiento en estado
 
+  const deletePostHandler = (event) => {
+    const postId = event.target.id;
+    db.collection("Posts")
+      .doc(`${postId}`)
+      .delete()
+      .then(() => {
+        setPostsState((previousState) => {
+          const newState = previousState.filter(post => post.id !== postId);
+          return [...newState];
+        })
+        console.log(
+          `Publicación con id ${postId} eliminada correctamente de la base de datos de Firebase.`
+        );
+      });
+  };
+
+  // Lectura de posts y almacenamiento en estado
   useEffect(() => {
     let unsuscribe;
     if (props.match.params.category === 'inicio') {
     let posts = [];
 
-      unsuscribe = db.collection('Posts').onSnapshot((docs) => {
+      unsuscribe = db.collection('Posts').get().then((docs) => {
         docs.forEach(doc => {
           if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
             console.log("EL DOCUMENTO TIENE LA HORA PENDIENTE", doc.data().id);
@@ -42,9 +58,8 @@ const Posts = (props) => {
       let posts = [];
       db.collection("Posts")
         .where("category", "==", `${props.match.params.category}`)
-        .onSnapshot((docs) => {
+        .get().then((docs) => {
           docs.forEach((doc) => {
-            console.log('debugger', doc.data());
             const postObject = {
               id: doc.id,
               author: doc.data().author,
@@ -73,6 +88,9 @@ const Posts = (props) => {
   postsArray = postsState.map(post => {
     return (
       <Post
+        clicked={(event) => {
+          deletePostHandler(event);
+          }}
         key={post.id}
         category={post.category}
         author={post.author}
@@ -81,10 +99,13 @@ const Posts = (props) => {
         likes={post.likes}
         comments={post.comments}
         date={post.timestamp}
-        
+        id={post.id}
       />
     );
   })
+  console.log(postsArray);
+
+
 
   return (
     <main className={style.postsContainer}>

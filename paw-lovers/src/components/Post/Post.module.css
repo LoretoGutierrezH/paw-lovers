@@ -27,6 +27,15 @@
 
 }
 
+.innerContent {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.pawContainer {
+  margin-right: 4rem;
+}
 /* .interactionContainer > button {
   height: 2rem;
   border: none;
