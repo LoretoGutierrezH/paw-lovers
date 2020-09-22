@@ -10,11 +10,12 @@ const auth = firebase.auth();
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
   // Lectura de posts y almacenamiento en estado
-  let posts = [];
 
   useEffect(() => {
     let unsuscribe;
     if (props.match.params.category === 'inicio') {
+    let posts = [];
+
       unsuscribe = db.collection('Posts').onSnapshot((docs) => {
         docs.forEach(doc => {
           if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
@@ -36,6 +37,7 @@ const Posts = (props) => {
       })
       console.log("Después del primer render: UseEffect de Fetch solo para inicio");
     } else {
+      let posts = [];
       db.collection("Posts")
         .where("category", "==", `${props.match.params.category}`)
         .onSnapshot((docs) => {
