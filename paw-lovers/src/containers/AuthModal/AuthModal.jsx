@@ -32,6 +32,7 @@ const AuthModal = (props) => {
             <button className={style.googleBtn} onClick={props.signInGoogle}><img src={GoogleLogo} alt=""/></button>
           </form>
           <form onSubmit={(event) => {event.preventDefault(); props.signUp(event);}}className={formState === 'sign-in' ? `${style.signUpForm} ${style.inactive}` : `${style.signUpForm} ${style.active}`}>
+            <input type="text" name="user_name" placeholder="Nombre de usuario" required />
             <input type="email" name="email" placeholder="Correo" required />
             <input type="password" name="password" placeholder="Contraseña" required />
             <button type="submit" className={`custom-btn green-btn ${style.btn}`}>Registrarse</button>

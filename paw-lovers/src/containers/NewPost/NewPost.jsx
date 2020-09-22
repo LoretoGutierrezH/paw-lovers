@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import style from './NewPost.module.css';
 import firebase from '../../Firebase';
 
@@ -8,16 +9,18 @@ const auth = firebase.auth();
 const NewPost = (props) => {
   const [infoMessageState, setInfoMessageState] = useState('');
   console.log(infoMessageState);
+  console.log(props.location);
 
   // Lógica de creación de nueva publicación
   const newPostHandler = (event) => {
+    const postCategory = event.target["post-category"].value;
     const postTitle = event.target["post-title"].value;
     const postContent = event.target["post-content"].value;
     if (auth.currentUser) {
      db.collection('Posts').add({
        uid: auth.currentUser.uid,
-       author: 'usuario_prueba',
-       category: props.match.params.category,
+       author: auth.currentUser.displayName,
+       category: postCategory,
        title: postTitle,
        content: postContent,
        likes: [],
@@ -27,6 +30,9 @@ const NewPost = (props) => {
      .then(() => {
        console.log('Publicación creada correctamente');
        setInfoMessageState('Publicación creada correctamente');
+       setTimeout(() => {
+        console.log('Redirección a página anterior'); 
+        })
      })
      .catch(error => {
        console.log(error.message);
@@ -41,7 +47,13 @@ const NewPost = (props) => {
     <main className={style.newPost}>
       <form onSubmit={(event) => {event.preventDefault(); newPostHandler(event);}}>
         <div className={style.categoryContainer}>
-          <p>Categoría: {props.match.params.category}</p>
+          <select name="post-category" required>
+            <option disabled defaultValue="Selecciona">Selecciona la categoría...</option>
+            <option value="tips">Tips</option>
+            <option value="cuarentena">Cuarentena</option>
+            <option value="adopción">Adopción</option>
+            <option value="servicios">Servicios</option>
+          </select>
         </div>
         <input name="post-title" type="text" placeholder="Título"required></input>
         <textarea name="post-content" type="text" placeholder="Escribe aquí" required />

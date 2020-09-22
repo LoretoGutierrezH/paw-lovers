@@ -101,3 +101,14 @@
 .googleBtn > img {
   width: 100%;
 }
+
+@media (min-width: 768px) {
+  .modal {
+    width: 33rem;
+    margin: 12rem auto;
+  }
+  .closeModalIcon {
+    right: 17rem;
+    top: 8rem;
+  }
+}

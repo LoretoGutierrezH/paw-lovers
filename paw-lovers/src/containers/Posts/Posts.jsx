@@ -36,11 +36,11 @@ const Posts = (props) => {
       })
       console.log("Después del primer render: UseEffect de Fetch solo para inicio");
     } else {
-      unsuscribe = db.collection("Posts")
+      db.collection("Posts")
         .where("category", "==", `${props.match.params.category}`)
         .onSnapshot((docs) => {
           docs.forEach((doc) => {
-
+            console.log('debugger', doc.data());
             const postObject = {
               id: doc.id,
               author: doc.data().author,
@@ -85,9 +85,10 @@ const Posts = (props) => {
   return (
     <main className={style.postsContainer}>
       <section className={style.newPostControl}>
-        <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link>
+        {auth.currentUser !== null ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>
       {postsArray}
+      {console.log(postsArray)}
     </main>
   );
 }

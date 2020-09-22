@@ -31,10 +31,17 @@ const App = (props) => {
   }
 
   const signUpHandler = (event) => {
+    const userName = event.target['user_name'].value;
     const email = event.target.email.value;
     const password = event.target.password.value;
     auth.createUserWithEmailAndPassword(`${email}`, `${password}`)
     .then(credentials => {
+      credentials.user.updateProfile({
+        displayName: userName
+      });
+      /* db.collection('users').doc(credentials.user.uid).set({
+        userName
+      }) */
       console.log(`Se acaba de registrar un nuevo usuario con correo ${credentials}`);
       props.onAuthenticate(true);
       setTimeout(() => {
