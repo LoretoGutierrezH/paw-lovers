@@ -5,28 +5,47 @@ import style from './Posts.module.css';
 import firebase from '../../Firebase';
 import { formattingDate } from './formattingDate.js';
 import { connect } from 'react-redux';
+import UpdatePostModal from '../UpdatePostModal/UpdatePostModal.jsx';
 const db = firebase.firestore();
 const auth = firebase.auth();
 
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
   const [authState, setAuthState] = useState(false);
+  const [updateModalState, setUpdateModalState] = useState(false);
+  const [modalDataState, setModalDataState] = useState([]);
 
-  const deletePostHandler = (event) => {
+
+  const postActionHandler = (event) => {
     const postId = event.target.id;
-    db.collection("Posts")
-      .doc(`${postId}`)
-      .delete()
-      .then(() => {
-        setPostsState((previousState) => {
-          const newState = previousState.filter(post => post.id !== postId);
-          return [...newState];
-        })
-        console.log(
-          `Publicación con id ${postId} eliminada correctamente de la base de datos de Firebase.`
-        );
-      });
-  };
+    if (event.target.value === 'delete') {
+      db.collection("Posts")
+        .doc(`${postId}`)
+        .delete()
+        .then(() => {
+          setPostsState((previousState) => {
+            const newState = previousState.filter((post) => post.id !== postId);
+            return [...newState];
+          });
+          console.log(
+            `Publicación con id ${postId} eliminada correctamente de la base de datos de Firebase.`
+          );
+        });
+    } else {
+      setUpdateModalState({
+        modalState: true
+      })
+      const selectedPost = postsState.filter((post) => post.id === postId);
+      setModalDataState(selectedPost);
+      console.log('Activando el modal de actualización de publicación');
+    }
+  }
+
+  const closeUpdateModal = () => {
+    setUpdateModalState({
+      modalState: false
+    })
+  }
 
   // Lectura de posts y almacenamiento en estado
   useEffect(() => {
@@ -88,9 +107,7 @@ const Posts = (props) => {
   postsArray = postsState.map(post => {
     return (
       <Post
-        clicked={(event) => {
-          deletePostHandler(event);
-          }}
+        postAction={(event) => postActionHandler(event)}
         key={post.id}
         category={post.category}
         author={post.author}
@@ -103,12 +120,12 @@ const Posts = (props) => {
       />
     );
   })
-  console.log(postsArray);
 
 
 
   return (
     <main className={style.postsContainer}>
+      <UpdatePostModal modalState={updateModalState.modalState} modalDataState={modalDataState} closeModal={closeUpdateModal} clicked={(event) => updateHandler(event)}/>
       <section className={style.newPostControl}>
         {props.authenticated === true ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>

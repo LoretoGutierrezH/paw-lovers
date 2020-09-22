@@ -24,7 +24,7 @@ const App = (props) => {
       props.onAuthenticate(true);
       setTimeout(() => {
         props.onActivateModal();
-      }, 3000);
+      }, 2000);
     })
     .catch(error => console.log(error));
   }
@@ -45,7 +45,7 @@ const App = (props) => {
       props.onAuthenticate(true);
       setTimeout(() => {
         props.onActivateModal();
-      }, 3000);
+      }, 2000);
     })
     .catch(error => console.log(error))
   }

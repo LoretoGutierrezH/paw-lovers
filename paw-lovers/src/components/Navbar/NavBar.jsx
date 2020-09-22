@@ -58,7 +58,7 @@ const NavBar = (props) => {
         </Link>
         <Link to="/adopción">
           <li className="icon-container">
-            <p>Adoptación</p>
+            <p>Adopción</p>
           </li>
         </Link>
         <Link to="/servicios">

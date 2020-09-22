@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import style from './Post.module.css';
 import PawImg from '../../assets/Paw.png';
@@ -6,13 +6,26 @@ import firebase from '../../Firebase';
 const db = firebase.firestore();
 
 const Post = (props) => {
+  const [pawState, setPawState] = useState({pawActivation: false});
+  const pawOptionsHandler = (event) => {
+    setPawState({
+      pawId: event.target.id,
+      pawActivation: pawState.pawActivation === false ? true : false
+    })
+  };
+
   return (
     <article className={style.post}>
       <section className={style.postContent}>
         <h4 className={style.heading}>{props.title}</h4>
         <div className={style.innerContent}>
-          <div onClick={(event) => props.clicked(event)} className={style.pawContainer}>
-            <img id={props.id} src={PawImg} alt="Imagen de patita de perro para eliminar o editar publicación" />
+          <div className={style.pawContainer}>
+            <img onClick={(event) => pawOptionsHandler(event)} id={props.id} src={PawImg} alt="Imagen de patita de perro para eliminar o editar publicación" />
+            <select onChange={(event) => props.postAction(event)} className={pawState.pawActivation === false ? "inactive" : "active"} name="paw-options" id={props.id}>
+              <option defaultValue="Elegir opción">Elegir opción</option>
+              <option value="update">Actualizar</option>
+              <option value="delete">Eliminar</option>
+            </select>
           </div>
           <div className={style.data}>
             <p className={style.heading}>Categoría: {props.category}</p>

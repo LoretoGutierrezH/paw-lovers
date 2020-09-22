@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import style from './NewPost.module.css';
 import firebase from '../../Firebase';
 
@@ -30,9 +30,6 @@ const NewPost = (props) => {
      .then(() => {
        console.log('Publicación creada correctamente');
        setInfoMessageState('Publicación creada correctamente');
-       setTimeout(() => {
-        console.log('Redirección a página anterior'); 
-        })
      })
      .catch(error => {
        console.log(error.message);
