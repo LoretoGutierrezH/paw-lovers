@@ -4,11 +4,13 @@ import Post from '../../components/Post/Post.jsx';
 import style from './Posts.module.css';
 import firebase from '../../Firebase';
 import { formattingDate } from './formattingDate.js';
+import { connect } from 'react-redux';
 const db = firebase.firestore();
 const auth = firebase.auth();
 
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
+  const [authState, setAuthState] = useState(false);
   // Lectura de posts y almacenamiento en estado
 
   useEffect(() => {
@@ -87,12 +89,17 @@ const Posts = (props) => {
   return (
     <main className={style.postsContainer}>
       <section className={style.newPostControl}>
-        {auth.currentUser !== null ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
+        {props.authenticated === true ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>
       {postsArray}
-      {console.log(postsArray)}
     </main>
   );
 }
 
-export default Posts;
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.authenticated
+  }
+}
+
+export default connect(mapStateToProps)(Posts);

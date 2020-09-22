@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import NavBar from './components/Navbar/NavBar.jsx';
 import AuthModal from './containers/AuthModal/AuthModal.jsx';
@@ -14,7 +14,6 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 const App = (props) => {
-
   // Basic authentication
   const signInHandler = (event) => {
     const email = event.target.email.value;
@@ -55,6 +54,7 @@ const App = (props) => {
     auth.signOut();
     props.onAuthenticate(false);
     console.log('Sesión cerrada', auth.currentUser);
+    console.log(props.authenticated);
   }
 
   // Gmail authentication
@@ -74,6 +74,7 @@ const App = (props) => {
 
   // Authentication observer
   auth.onAuthStateChanged(user => {
+    console.log('onAuthStateChanged', user, props.authenticated);
     if (user !== null) {
       props.onAuthenticate(true);
       console.log(`Usuario actual: ${user.email}`)
