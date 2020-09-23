@@ -9,7 +9,7 @@ const ControlPanel = (props) => {
     <main className={style.controlPanelContainer}>
       <h1 className={style.controlPanelHeading}>Editar perfil</h1>
       <form className={style.controlPanelForm} onSubmit={(event) => console.log("Editando perfil de usuario", event.target)}>
-        <div className={style.profilePic}>
+        <div onClick={() => console.log('editando foto de perfil')} className={style.profilePic}>
           <img src={AnonymousAvatar} alt="Foto de perfil del usuario"/>
         </div>
         <p>{props.userName}</p><input type="text" name="user-name" placeholder="Nuevo nombre de usuario" />

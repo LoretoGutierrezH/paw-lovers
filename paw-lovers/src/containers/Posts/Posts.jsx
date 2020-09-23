@@ -14,6 +14,7 @@ const Posts = (props) => {
   const [authState, setAuthState] = useState(false);
   const [updateModalState, setUpdateModalState] = useState({modalState: false});
   const [errorState, setErrorState] = useState(false);
+  const [successState, setSuccessState] = useState(false);
 
 
   const postActionHandler = (event) => {
@@ -25,10 +26,13 @@ const Posts = (props) => {
         .doc(`${postId}`)
         .delete()
         .then(() => {
-          setPostsState((previousState) => {
+          setSuccessState(true);
+          setTimeout(() => {
+            setPostsState((previousState) => {
             const newState = previousState.filter((post) => post.id !== postId);
             return [...newState];
           });
+          }, 1000)
           console.log(
             `Publicación con id ${postId} eliminada correctamente de la base de datos de Firebase.`
           );
@@ -154,7 +158,7 @@ const Posts = (props) => {
   return (
     <main className={style.postsContainer}>
       {errorState ? <Redirect to="/404"></Redirect> : null}
-      <UpdatePostModal modalState={updateModalState} setModalState={setUpdateModalState} clicked={(event) => updateHandler(event)}/>
+      <UpdatePostModal modalState={updateModalState} setModalState={setUpdateModalState} clicked={(event) => updateHandler(event)} successMessage={successState}/>
       <section className={style.newPostControl}>
         {props.authenticated === true ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>

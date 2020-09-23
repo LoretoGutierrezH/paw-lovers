@@ -9,6 +9,7 @@ const auth = firebase.auth();
 const NewPost = (props) => {
   const [infoMessageState, setInfoMessageState] = useState('');
   const [errorState, setErrorState] = useState(false);
+  const [successState, setSuccessState] = useState(false);
   console.log(infoMessageState);
   console.log(props.location);
 
@@ -31,6 +32,10 @@ const NewPost = (props) => {
      .then(() => {
        console.log('Publicación creada correctamente');
        setInfoMessageState('Publicación creada correctamente');
+       setTimeout(() => {
+         setSuccessState(true);
+       }, 1000)
+       
      })
      .catch(error => {
        console.log(error.message);
@@ -44,6 +49,7 @@ const NewPost = (props) => {
   }
   return (
     <main className={style.newPost}>
+      {successState ? <Redirect to={`/${props.match.params.category}`}></Redirect> : null}
       {errorState ? <Redirect to="/404"></Redirect> : null}
       <form onSubmit={(event) => {event.preventDefault(); newPostHandler(event);}}>
         <div className={style.categoryContainer}>

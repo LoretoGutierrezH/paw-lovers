@@ -18,6 +18,7 @@ const UpdatePostModal = (props) => {
         {console.log('dentro del return', props.modalState.id, props.modalState.title, props.modalState.content)}
         <button className="custom-btn green-btn">Actualizar</button>
         </form>
+        <p>{props.successMessage}</p>
       </section>
     </article>
   );

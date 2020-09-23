@@ -71,11 +71,11 @@ const NavBar = (props) => {
             <p>Concurso</p>
           </li>
         </Link>
-        <Link to="/panel-de-control">
+        {props.authenticated ? <Link to="/panel-de-control">
           <li className="icon-container">
             <p>Panel de control</p>
           </li>
-        </Link>
+        </Link> : null} 
       </ul>
     </nav>
   );

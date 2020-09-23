@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import NavBar from './components/Navbar/NavBar.jsx';
 import AuthModal from './containers/AuthModal/AuthModal.jsx';
@@ -7,7 +7,6 @@ import ControlPanel from './containers/ControlPanel/ControlPanel.jsx';
 import Posts from './containers/Posts/Posts.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Error404 from './components/Error404/Error404.jsx';
-import style from './App.module.css';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/authActions';
 import firebase from './Firebase';
