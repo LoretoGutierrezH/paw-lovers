@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-do
 import NavBar from './components/Navbar/NavBar.jsx';
 import AuthModal from './containers/AuthModal/AuthModal.jsx';
 import NewPost from './containers/NewPost/NewPost.jsx';
+import ControlPanel from './containers/ControlPanel/ControlPanel.jsx';
 import Posts from './containers/Posts/Posts.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import Error404 from './components/Error404/Error404.jsx';
 import style from './App.module.css';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/authActions';
@@ -12,7 +14,6 @@ import firebase from './Firebase';
 
 const db = firebase.firestore();
 const auth = firebase.auth();
-
 const App = (props) => {
   // Basic authentication
   const signInHandler = (event) => {
@@ -20,7 +21,6 @@ const App = (props) => {
     const password = event.target.password.value;
     auth.signInWithEmailAndPassword(`${email}`, `${password}`)
     .then(credentials => {
-      console.log(auth.currentUser.email);
       props.onAuthenticate(true);
       setTimeout(() => {
         props.onActivateModal();
@@ -54,7 +54,6 @@ const App = (props) => {
     auth.signOut();
     props.onAuthenticate(false);
     console.log('Sesión cerrada', auth.currentUser);
-    console.log(props.authenticated);
   }
 
   // Gmail authentication
@@ -74,10 +73,8 @@ const App = (props) => {
 
   // Authentication observer
   auth.onAuthStateChanged(user => {
-    console.log('onAuthStateChanged', user, props.authenticated);
     if (user !== null) {
-      props.onAuthenticate(true);
-      console.log(`Usuario actual: ${user.email}`)
+      props.onAuthenticate(true, auth.currentUser.displayName, auth.currentUser.uid, auth.currentUser.email);
     } else {
       props.onAuthenticate(false);
     }
@@ -89,7 +86,14 @@ const App = (props) => {
       <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
       <Switch> 
         {window.location.pathname === "/" ? <Redirect to="/inicio"></Redirect> : null}
-        <Route path="/:category/nueva-publicación" component={NewPost}/>
+        <Route path="/panel-de-control" component={ControlPanel}>
+          {!props.authenticated ? <Redirect to="/404"></Redirect> : console.log('AUTENTICADO')}
+        </Route>
+        <Route path="/404" component={Error404} exact/>
+
+        <Route path="/:category/nueva-publicación" component={NewPost}>
+          {!props.authenticated ? <Redirect to="/404"></Redirect> : null}
+        </Route>
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />
         <Route path="/cuidados-40tena" component={Posts} />
@@ -117,7 +121,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuthenticate: (authValue) => dispatch({type: actionTypes.AUTHENTICATE, value: authValue}),
+    onAuthenticate: (authValue, userName, userId, userEmail) => dispatch({type: actionTypes.AUTHENTICATE, value: authValue,  userName, userId, userEmail}),
     onActivateModal: () => dispatch({type: actionTypes.ACTIVATE})
   }
 }

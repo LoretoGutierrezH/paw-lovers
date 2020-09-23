@@ -52,3 +52,7 @@ p {
 .inactive {
   display: none;
 }
+
+.greyOption {
+  color: grey;
+}

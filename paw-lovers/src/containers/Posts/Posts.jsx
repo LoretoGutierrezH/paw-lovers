@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Post from '../../components/Post/Post.jsx';
 import style from './Posts.module.css';
 import firebase from '../../Firebase';
@@ -13,11 +13,14 @@ const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
   const [authState, setAuthState] = useState(false);
   const [updateModalState, setUpdateModalState] = useState({modalState: false});
+  const [errorState, setErrorState] = useState(false);
 
 
   const postActionHandler = (event) => {
     const postId = event.target.id;
-    if (event.target.value === 'delete') {
+    const uid = event.target.name;
+    console.log(event.target.name, props.userId);
+    if (event.target.value === 'delete' && uid === props.userId) {
       db.collection("Posts")
         .doc(`${postId}`)
         .delete()
@@ -30,9 +33,8 @@ const Posts = (props) => {
             `Publicación con id ${postId} eliminada correctamente de la base de datos de Firebase.`
           );
         });
-    } else {
+    } else if (event.target.value === 'update' && uid === props.userId) {
       const selectedPost = postsState.filter((post) => post.id === postId);
-      console.log(selectedPost);
       setUpdateModalState({
         modalState: true,
         id: selectedPost['0'].id,
@@ -41,6 +43,10 @@ const Posts = (props) => {
       })
       
       console.log('Activando el modal de actualización de publicación');
+    } else {
+      setErrorState(true);
+      console.log(`El usuario está intentando borrar o editar una publicación que no le pertenece, esta acción está PROHIBIDA`);
+      
     }
   }
 
@@ -61,15 +67,10 @@ const Posts = (props) => {
       console.log('ACTUALIZADO', newState);
       setPostsState([...newState])
       console.log('Post actualizado');
-      closeUpdateModal();
     })
   }
 
-  const closeUpdateModal = () => {
-    setUpdateModalState({
-      modalState: false
-    })
-  }
+ 
 
   // Lectura de posts y almacenamiento en estado
   useEffect(() => {
@@ -85,6 +86,7 @@ const Posts = (props) => {
           const postObject = {
             id: doc.id,
             author: doc.data().author,
+            uid: doc.data().uid,
             category: doc.data().category,
             comments: doc.data().comments,
             content: doc.data().content,
@@ -106,6 +108,7 @@ const Posts = (props) => {
             const postObject = {
               id: doc.id,
               author: doc.data().author,
+              uid: doc.data().uid,
               category: doc.data().category,
               comments: doc.data().comments,
               content: doc.data().content,
@@ -141,6 +144,7 @@ const Posts = (props) => {
         comments={post.comments}
         date={post.timestamp}
         id={post.id}
+        uid={post.uid}
       />
     );
   })
@@ -149,7 +153,8 @@ const Posts = (props) => {
 
   return (
     <main className={style.postsContainer}>
-      <UpdatePostModal modalState={updateModalState} closeModal={closeUpdateModal} clicked={(event) => updateHandler(event)}/>
+      {errorState ? <Redirect to="/404"></Redirect> : null}
+      <UpdatePostModal modalState={updateModalState} setModalState={setUpdateModalState} clicked={(event) => updateHandler(event)}/>
       <section className={style.newPostControl}>
         {props.authenticated === true ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>
@@ -160,7 +165,8 @@ const Posts = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.authenticated
+    authenticated: state.authenticated,
+    userId: state.userId
   }
 }
 

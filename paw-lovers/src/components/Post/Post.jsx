@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import style from './Post.module.css';
 import PawImg from '../../assets/Paw.png';
 import firebase from '../../Firebase';
+import {connect} from 'react-redux';
 const db = firebase.firestore();
 
 const Post = (props) => {
@@ -13,16 +13,16 @@ const Post = (props) => {
       pawActivation: pawState.pawActivation === false ? true : false
     })
   };
-
+  console.log("user id en redux", props.userId, "user id como prop de post", props.uid);
   return (
     <article className={style.post}>
       <section className={style.postContent}>
         <h4 className={style.heading}>{props.title}</h4>
         <div className={style.innerContent}>
-          <div className={style.pawContainer}>
+          <div className={props.authenticated === true && props.userId === props.uid ? `${style.pawContainer} active` : `${style.pawContainer} inactive`}>
             <img onClick={(event) => pawOptionsHandler(event)} id={props.id} src={PawImg} alt="Imagen de patita de perro para eliminar o editar publicación" />
-            <select onChange={(event) => props.postAction(event)} className={pawState.pawActivation === false ? "inactive" : "active"} name="paw-options" id={props.id}>
-              <option defaultValue="Elegir opción">Elegir opción</option>
+            <select onChange={(event) => props.postAction(event)} className={pawState.pawActivation === false ? "inactive" : "active"} name="paw-options" id={props.id} name={props.uid}>
+              <option className="inactive grey-option" defaultValue="Elegir opción">Elegir opción</option>
               <option value="update">Actualizar</option>
               <option value="delete">Eliminar</option>
             </select>
@@ -44,5 +44,10 @@ const Post = (props) => {
     </article>
   );
 }
-
-export default withRouter(Post);
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.authenticated,
+    userId: state.userId
+  }
+}
+export default connect(mapStateToProps)(Post);

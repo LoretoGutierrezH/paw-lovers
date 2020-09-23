@@ -8,7 +8,10 @@ const authReducer = (state = initialState, action) => {
   if (action.type === actionTypes.AUTHENTICATE) {
     return state = {
       ...state,
-      authenticated: action.value
+      authenticated: action.value,
+      userName: action.userName,
+      userId: action.userId,
+      userEmail: action.userEmail
     }
   }
 

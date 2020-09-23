@@ -8,6 +8,7 @@ const auth = firebase.auth();
 
 const NewPost = (props) => {
   const [infoMessageState, setInfoMessageState] = useState('');
+  const [errorState, setErrorState] = useState(false);
   console.log(infoMessageState);
   console.log(props.location);
 
@@ -37,11 +38,13 @@ const NewPost = (props) => {
      })
 
     } else {
+      setErrorState(true);
       console.log('No hay ningún usuario conectado, por favor inicia sesión y vuelve a intentarlo');
     }
   }
   return (
     <main className={style.newPost}>
+      {errorState ? <Redirect to="/404"></Redirect> : null}
       <form onSubmit={(event) => {event.preventDefault(); newPostHandler(event);}}>
         <div className={style.categoryContainer}>
           <select name="post-category" required>

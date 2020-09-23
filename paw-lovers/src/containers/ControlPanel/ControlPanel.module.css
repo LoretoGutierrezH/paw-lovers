@@ -1,0 +1,44 @@
+.controlPanelContainer {
+  min-height: 100vh;
+  background-color: white;
+  padding: 9rem 0;
+}
+
+.controlPanelForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 2rem auto;
+  border: 1px solid #81D2CB;
+  padding: 1.5rem;
+  align-items: center;
+}
+
+.controlPanelForm > input, .controlPanelForm > button {
+  margin-top: 1rem;
+}
+
+.controlPanelForm > p {
+  margin-top: 2rem;
+}
+
+.controlPanelForm > button {
+  width: 30%;
+  margin: 2rem auto;
+}
+
+.controlPanelHeading {
+  font-size: 2rem;
+  background-color: #8BC34A;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.profilePic {
+  width: 10rem;
+}
+
+.profilePic > img {
+  width: 100%;
+}
