@@ -12,8 +12,7 @@ const auth = firebase.auth();
 const Posts = (props) => {
   const [postsState, setPostsState] = useState([]);
   const [authState, setAuthState] = useState(false);
-  const [updateModalState, setUpdateModalState] = useState(false);
-  const [modalDataState, setModalDataState] = useState([]);
+  const [updateModalState, setUpdateModalState] = useState({modalState: false});
 
 
   const postActionHandler = (event) => {
@@ -32,13 +31,38 @@ const Posts = (props) => {
           );
         });
     } else {
-      setUpdateModalState({
-        modalState: true
-      })
       const selectedPost = postsState.filter((post) => post.id === postId);
-      setModalDataState(selectedPost);
+      console.log(selectedPost);
+      setUpdateModalState({
+        modalState: true,
+        id: selectedPost['0'].id,
+        title: selectedPost['0'].title,
+        content: selectedPost['0'].content
+      })
+      
       console.log('Activando el modal de actualización de publicación');
     }
+  }
+
+  const updateHandler = (event) => {
+    const postId = event.target.id;
+    let newTitle = event.target['post-title'].value;
+    let newContent = event.target['post-content'].value;
+    console.log('Se actualizara con lo siguiente', postId, newTitle, newContent);
+    db.collection('Posts').doc(`${postId}`).update({
+      title: newTitle,
+      content: newContent
+    }).then(() => {
+      const updatedPost = postsState.filter(post => post.id === postId);
+      updatedPost[0].title = newTitle;
+      updatedPost[0].content = newContent;
+      const noUpdated = postsState.filter(post => post.id !== postId);
+      const newState = noUpdated.concat(updatedPost);
+      console.log('ACTUALIZADO', newState);
+      setPostsState([...newState])
+      console.log('Post actualizado');
+      closeUpdateModal();
+    })
   }
 
   const closeUpdateModal = () => {
@@ -125,7 +149,7 @@ const Posts = (props) => {
 
   return (
     <main className={style.postsContainer}>
-      <UpdatePostModal modalState={updateModalState.modalState} modalDataState={modalDataState} closeModal={closeUpdateModal} clicked={(event) => updateHandler(event)}/>
+      <UpdatePostModal modalState={updateModalState} closeModal={closeUpdateModal} clicked={(event) => updateHandler(event)}/>
       <section className={style.newPostControl}>
         {props.authenticated === true ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : null}
       </section>
