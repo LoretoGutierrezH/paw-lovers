@@ -84,7 +84,8 @@ const App = (props) => {
       <NavBar signOut={signOutHandler} />
       <AuthModal signInGoogle={singInGoogle} signIn={signInHandler} signUp={signUpHandler}/>
       <Switch> 
-        {window.location.pathname === "/" ? <Redirect to="/inicio"></Redirect> : null}
+        {/* {window.location.pathname === "/" ? <Redirect to="/inicio"></Redirect> : null} */}
+        <Route path="/" component={Posts} exact />
         <Route path="/panel-de-control" component={ControlPanel}>
           {!props.authenticated ? <Redirect to="/404"></Redirect> : console.log('AUTENTICADO')}
         </Route>

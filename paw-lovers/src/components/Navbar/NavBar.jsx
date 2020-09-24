@@ -18,7 +18,7 @@ const NavBar = (props) => {
 
   return (
     <nav className={style.navbar}>
-      <Link to="/inicio">
+      <Link to="/">
         <div className={style.logoContainer}>
           <img src={PawLovers} alt="Inicio" />
         </div>
@@ -41,7 +41,7 @@ const NavBar = (props) => {
           burgerMenuState === "closed" ? style.closedMenu : style.openMenu
         }
       >
-        <Link to="/inicio">
+        <Link to="/">
           <li className="icon-container">
             <p>Inicio</p>
           </li>

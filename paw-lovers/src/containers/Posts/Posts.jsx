@@ -16,7 +16,6 @@ const Posts = (props) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
 
-
   const postActionHandler = (event) => {
     const postId = event.target.id;
     const uid = event.target.name;
@@ -78,10 +77,9 @@ const Posts = (props) => {
 
   // Lectura de posts y almacenamiento en estado
   useEffect(() => {
+    if (window.location.pathname === "/") {
     let unsuscribe;
-    if (props.match.params.category === 'inicio') {
     let posts = [];
-
       unsuscribe = db.collection('Posts').get().then((docs) => {
         docs.forEach(doc => {
           if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
@@ -103,12 +101,24 @@ const Posts = (props) => {
         setPostsState(posts); //tiene que estar aquí o posts = []
       })
       console.log("Después del primer render: UseEffect de Fetch solo para inicio");
-    } else {
+     }
+    }, []);
+
+  useEffect(() => {
+    if (window.location.pathname === "/") {
+      let unsuscribe;
       let posts = [];
-      db.collection("Posts")
-        .where("category", "==", `${props.match.params.category}`)
-        .get().then((docs) => {
+      unsuscribe = db
+        .collection("Posts")
+        .get()
+        .then((docs) => {
           docs.forEach((doc) => {
+            if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
+              console.log(
+                "EL DOCUMENTO TIENE LA HORA PENDIENTE",
+                doc.data().id
+              );
+            }
             const postObject = {
               id: doc.id,
               author: doc.data().author,
@@ -117,21 +127,45 @@ const Posts = (props) => {
               comments: doc.data().comments,
               content: doc.data().content,
               likes: doc.data().likes,
-              timestamp: !doc.data().timestamp && doc.metadata.hasPendingWrites ?  "Hora en proceso" : formattingDate(doc),
+              timestamp:
+                !doc.data().timestamp && doc.metadata.hasPendingWrites
+                  ? "Hora en proceso"
+                  : formattingDate(doc),
               title: doc.data().title,
             };
             posts.push(postObject);
           });
-          setPostsState(posts);
+          setPostsState(posts); //tiene que estar aquí o posts = []
         });
-      console.log("Después del primer render: UseEffect de Fetch");
-    }
-
-    
-      //unsuscribe();
-    
-  }, [props.match.params.category]);
-
+      console.log(
+        "Después del primer render: UseEffect de Fetch solo para inicio"
+      );
+    } else { 
+    let posts = [];
+    db.collection("Posts")
+      .where("category", "==", `${props.match.params.category}`)
+      .get().then((docs) => {
+        docs.forEach((doc) => {
+          const postObject = {
+            id: doc.id,
+            author: doc.data().author,
+            uid: doc.data().uid,
+            category: doc.data().category,
+            comments: doc.data().comments,
+            content: doc.data().content,
+            likes: doc.data().likes,
+            timestamp: !doc.data().timestamp && doc.metadata.hasPendingWrites ?  "Hora en proceso" : formattingDate(doc),
+            title: doc.data().title,
+          };
+          posts.push(postObject);
+        });
+        setPostsState(posts);
+      });
+     console.log("Después del primer render: UseEffect de Fetch");
+     }
+    }, [props.match.params.category])
+      
+  console.log(window.location.pathname, props.match.params.category);
   // Llenando Post con información almacenada en el estado
   let postsArray = null;
 
@@ -153,7 +187,7 @@ const Posts = (props) => {
     );
   })
 
-
+console.log(postsArray);
 
   return (
     <main className={style.postsContainer}>
