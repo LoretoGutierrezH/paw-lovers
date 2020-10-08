@@ -1,0 +1,114 @@
+.modalWrapper {
+  position: fixed;
+  background-color: #808080b0;
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  width: 24rem;
+  margin: 2rem auto;
+}
+
+.modal > header {
+  background-color: #81D2CB;
+  color: white;
+}
+
+.modal > header > nav {
+  display: flex;
+  justify-content: space-evenly;
+  height: 3rem;
+  align-items: center;
+}
+
+.modal > header > nav > p {
+  height: 3rem;
+  width: 50%;
+  padding-top: .5rem;
+  padding-left: 2rem;
+}
+
+.modal > header > nav > p:hover {
+  background-color: #45615f;
+  cursor: pointer;
+}
+
+.activeTab {
+  background-color: #45615f;
+}
+
+.inactiveTab {
+  background-color: #81D2CB;
+}
+
+.closeModalIcon {
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
+}
+
+.modalContent {
+  position: relative;
+  background-color: white;
+  min-height: 20rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.signInForm, .signUpForm {
+  display: flex;
+  flex-flow: column wrap;
+  padding-top: 3rem;
+}
+
+.signInForm > input, .btn, .signUpForm > input, .btn {
+  width: 80%;
+  margin: 1rem auto;
+}
+
+.active {
+  display: flex;
+}
+
+.inactive {
+  display: none;
+}
+
+.signInForm > input, .signUpForm > input {
+  border: 1px solid grey;
+  padding: .5rem;
+}
+
+.signInForm > .btn, .signUpForm > .btn {
+  cursor: pointer;
+}
+
+.googleBtn {
+  border: none;
+  background-color: transparent;
+  width: 3rem;
+  margin: 1rem auto;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
+
+.googleBtn:hover {
+  transform: scale(1.1);
+}
+
+.googleBtn > img {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 33rem;
+    margin: 12rem auto;
+  }
+  .closeModalIcon {
+    right: 17rem;
+    top: 8rem;
+  }
+}

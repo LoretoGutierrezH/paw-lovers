@@ -1,0 +1,62 @@
+.navbar {
+  background-color: #81D2CB;
+  display: flex;
+  min-height: 10vh;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  position: fixed;
+}
+
+.logoContainer {
+  width: 9rem;
+}
+
+.logoContainer > img {
+  width: 100%;
+}
+
+.authenticationIcon {
+  position: absolute;
+  right: 8rem;
+  cursor: pointer;
+}
+
+.burgerMenuIcon {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+
+}
+
+#burgerMenu {
+  position: absolute;
+  top: 6rem;
+  width: 13rem;
+  background-color: #81D2CB;
+  right: 0rem;
+}
+
+ul#burgerMenu > a {
+  list-style: none;
+  font-size: 1.5rem;
+  color: grey;
+  text-decoration: none;
+}
+
+ul#burgerMenu > a > li {
+  padding: .5rem;
+}
+
+ul#burgerMenu > a > li:hover {
+  background-color: #668683;
+  color: white;
+}
+
+.openMenu {
+  display: block;
+}
+
+.closedMenu {
+  display: none;
+}
