@@ -4,18 +4,22 @@ import PawImg from '../../assets/Paw.png';
 import firebase from '../../Firebase';
 import {connect} from 'react-redux';
 const db = firebase.firestore();
+const auth = firebase.auth();
 
 const Post = (props) => {
   const [pawState, setPawState] = useState({pawActivation: false});
+
   const pawOptionsHandler = (event) => {
     setPawState({
       pawId: event.target.id,
       pawActivation: pawState.pawActivation === false ? true : false
     })
   };
-  console.log("user id en redux", props.userId, "user id como prop de post", props.uid);
+
+  
+
   return (
-    <article className={style.post}>
+    <article data-userid={props.uid} data-postid={props.id} className={style.post}>
       <section className={style.postContent}>
         <h4 className={style.heading}>{props.title}</h4>
         <div className={style.innerContent}>
@@ -37,7 +41,7 @@ const Post = (props) => {
         </div>
       </section>
       <div className={style.interactionContainer}>
-        <button className="custom-btn green-btn">Me gusta</button>
+        <button onClick={(event) => {event.preventDefault(); props.clicked(event)}} className="custom-btn green-btn">Me gusta</button>
         <button className="custom-btn green-btn">Comentar</button>
         <button className="custom-btn green-btn">Compartir</button>
       </div>

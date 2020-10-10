@@ -73,6 +73,45 @@ const Posts = (props) => {
     })
   }
 
+
+  const likeOrUnlike = (event) => {
+    const authorUid = event.target.parentElement.parentElement.getAttribute('data-userid');
+    const postId = event.target.parentElement.parentElement.getAttribute('data-postid');
+
+    db.collection('Posts').doc(`${postId}`).get().then((doc) => {
+      const docLikes = doc.data().likes;
+      console.log(docLikes);
+      const includesUser = docLikes.includes(`${firebase.auth().currentUser.displayName}`);
+      console.log(includesUser);
+      if (includesUser === true) {
+        db.collection('Posts').doc(`${postId}`).update({
+          likes: firebase.firestore.FieldValue.arrayRemove(`${firebase.auth().currentUser.displayName}`),
+        })
+        .then(() => {
+          const updatedPost = postsState.filter(post => post.id === postId);
+          if (updatedPost[0].likes.includes(auth.currentUser.displayName)) {
+            const updatedLikes = updatedPost[0].likes.filter(like => like === auth.currentUser.displayName);
+            
+          }
+
+          const notUpdated = postsState.filter(post => post.id !== postId);
+          const newState = notUpdated.concat(updatedPost);
+          setPostsState([...newState]);
+        })
+      } else if (includesUser === false) {
+        db.collection('Posts').doc(`${postId}`).update({
+          likes: firebase.firestore.FieldValue.arrayUnion(`${firebase.auth().currentUser.displayName}`),
+        })
+        .then(() => {
+          const updatedPost = postsState.filter(post => post.id === postId);
+          const notUpdated = postsState.filter(post => post.id !== postId);
+          const newState = notUpdated.concat(updatedPost);
+          setPostsState([...newState]);
+
+        })
+      }
+    });
+  }
  
 
   // Lectura de posts y almacenamiento en estado
@@ -166,6 +205,7 @@ const Posts = (props) => {
     }, [props.match.params.category])
       
   console.log(window.location.pathname, props.match.params.category);
+  
   // Llenando Post con información almacenada en el estado
   let postsArray = null;
 
@@ -183,6 +223,7 @@ const Posts = (props) => {
         date={post.timestamp}
         id={post.id}
         uid={post.uid}
+        clicked={likeOrUnlike}
       />
     );
   })

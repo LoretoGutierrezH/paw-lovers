@@ -49,7 +49,7 @@ const NewPost = (props) => {
   }
   return (
     <main className={style.newPost}>
-      {successState ? <Redirect to={`/${props.match.params.category}`}></Redirect> : null}
+      {successState ? <Redirect to="/"></Redirect> : null}
       {errorState ? <Redirect to="/404"></Redirect> : null}
       <form onSubmit={(event) => {event.preventDefault(); newPostHandler(event);}}>
         <div className={style.categoryContainer}>
