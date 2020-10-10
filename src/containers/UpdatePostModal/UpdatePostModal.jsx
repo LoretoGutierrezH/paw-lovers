@@ -15,7 +15,6 @@ const UpdatePostModal = (props) => {
         <form id={props.modalState.id} onSubmit={(event) => {event.preventDefault(); props.clicked(event); closeModal();}}>
         <input name="post-title" type="text" defaultValue={props.modalState.title} />
         <textarea name="post-content" id="" cols="30" rows="10" defaultValue={props.modalState.content}></textarea>
-        {console.log('dentro del return', props.modalState.id, props.modalState.title, props.modalState.content)}
         <button className="custom-btn green-btn">Actualizar</button>
         </form>
         <p>{props.successMessage}</p>

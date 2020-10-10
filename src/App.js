@@ -90,10 +90,12 @@ const App = (props) => {
           {!props.authenticated ? <Redirect to="/404"></Redirect> : console.log('AUTENTICADO')}
         </Route>
         <Route path="/404" component={Error404} exact/>
-
+        
         <Route path="/:category/nueva-publicación" component={NewPost}>
           {!props.authenticated ? <Redirect to="/404"></Redirect> : null}
         </Route>
+        <Route path="/nueva-publicación" component={NewPost} />
+
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />
         <Route path="/cuidados-40tena" component={Posts} />
