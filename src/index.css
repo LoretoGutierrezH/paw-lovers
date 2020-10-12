@@ -44,6 +44,11 @@ p {
   color: white;
 }
 
+.warning-btn {
+  background-color: darkred;
+  color: white;
+}
+
 /* UTILITIES */
 .active {
   display: block;

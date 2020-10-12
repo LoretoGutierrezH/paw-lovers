@@ -6,6 +6,7 @@ import firebase from '../../Firebase';
 import { formattingDate } from './formattingDate.js';
 import { connect } from 'react-redux';
 import UpdatePostModal from '../UpdatePostModal/UpdatePostModal.jsx';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal.jsx';
 const db = firebase.firestore();
 const auth = firebase.auth();
 
@@ -15,6 +16,7 @@ const Posts = (props) => {
     const [updateModalState, setUpdateModalState] = useState({modalState: false});
     const [errorState, setErrorState] = useState(false);
     const [successState, setSuccessState] = useState(false);
+    const [confirmationModalState, setConfirmationModalState] = useState({modalState: false});
 
   //Para render de posts de index y por categoría con unsuscribe
   useEffect(() => {
@@ -103,13 +105,29 @@ const likeOrUnlike = (event) => {
     });
 }
 
-const activatePawOptions = (event) => {
-  //activar la patita de perro con las opciones Actualizar y Eliminar
-}
+const updateOrDelete = (event) => {
+  const postId = event.currentTarget.getAttribute("data-postid");
+  const authorUid = event.currentTarget.getAttribute("data-userid");
 
-const updatePost = (event) => {
+  //Eliminar post
+  if (event.target.id === "delete" && props.userId === authorUid) {
+      console.log("tienes permiso para eliminar el post");
+      setConfirmationModalState({modalState: true, postId});
+  } else if (event.target.id === "delete" && props.userId !== authorUid) {
+    console.log("no tienes permiso para eliminar el post");
+  }
+
+  //Actualizar post
+  if (event.target.id === "update" && props.userId === authorUid) {
+    const postTitle = event.currentTarget.getAttribute("data-posttitle");
+    const postContent = event.currentTarget.getAttribute("data-postcontent");
+    setUpdateModalState({modalState: true, postTitle, postContent, postId});
+  } else if (event.target.id === "update" && props.userId === authorUid) {
+    console.log("no tienes permiso para actualizar el post");
+  }
   //transformar title y content en inputs de edición, actualizar solo si pertenece al usuario actual
   //*** aprender a hacerlo así, pero implementar la opción de edición vía modal */
+ 
 }
 
 const deletePost = (event) => {
@@ -121,7 +139,7 @@ let postsArray = null;
 postsArray = postsState.map(post => {
   return (
     <Post
-      /* postAction={(event) => postActionHandler(event)} */
+      updateOrDelete={(event) => updateOrDelete(event)}
       key={post.id}
       category={post.category}
       author={post.author}
@@ -143,6 +161,7 @@ console.log(postsArray);
     <main className={style.postsContainer}>
         {errorState ? <Redirect to="/404"></Redirect> : null}
         <UpdatePostModal modalState={updateModalState} setModalState={setUpdateModalState} /* clicked={(event) => updateHandler(event)} */ successMessage={successState}/>
+        <ConfirmationModal confirmationState={confirmationModalState} setConfirmationState={setConfirmationModalState} />
         <section className={style.newPostControl}>
             {props.authenticated === true && props.match.params.category !== undefined ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : <Link to="/nueva-publicación"><button className="custom-btn green-btn">Nueva publicación</button></Link>}
         </section>

@@ -1,0 +1,51 @@
+.modalWrapper {
+    position: fixed;
+    background-color: #8080806e;
+    top: 0rem;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 8rem;
+}
+
+.modal {
+  width: 24rem;
+  margin: 2rem auto;
+}
+
+.modalContent {
+  position: relative;
+  background-color: white;
+  min-height: 20rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 2rem;
+}
+
+.actionController {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+}
+
+.actionMessage {
+  margin-top: 1rem;
+}
+  
+.active {
+display: flex;
+}
+
+.inactive {
+display: none;
+}
+
+.closeModalBtn {
+position: absolute;
+right: 2rem;
+top: 6rem;
+font-size: 3rem;
+font-weight: bold;
+}
