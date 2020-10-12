@@ -22,7 +22,7 @@ const Posts = (props) => {
     let posts;
     if (window.location.pathname === "/") {
       console.log('posts antes de llenado', posts);
-      unsuscribe = db.collection('Posts').onSnapshot((docs) => {
+      unsuscribe = db.collection('Posts').orderBy("timestamp", "desc").onSnapshot((docs) => {
       posts = [];
       docs.forEach(doc => {
           if (!doc.data().timestamp && doc.metadata.hasPendingWrites) {
@@ -52,8 +52,8 @@ const Posts = (props) => {
     } else {
       let posts;
       db.collection("Posts")
-      .where("category", "==", `${props.match.params.category}`)
-      .get().then((docs) => {
+      .where("category", "==", `${props.match.params.category}`).orderBy("timestamp", "desc")
+      .onSnapshot((docs) => {
         let posts = [];
         docs.forEach((doc) => {
           const postObject = {
@@ -72,19 +72,19 @@ const Posts = (props) => {
         setPostsState(posts);
       });
     }
-
-    return () => {
-      if (unsuscribe !== null) {
-       unsuscribe();
-      }
+    if (unsuscribe !== null) {
+      return () => {
+        unsuscribe();
+      } 
     }
+   
   }, [setPostsState, props.match.params.category]);
 
 
 const likeOrUnlike = (event) => {
   //agregar a array de likes, en la vista parcial solo se debe ver el número de likes y en la vista de detalle se debe activar un modal con la lista de nombres de usuario
   const authorUid = event.target.parentElement.parentElement.getAttribute('data-userid');
-    const postId = event.target.parentElement.parentElement.getAttribute('data-postid');
+  const postId = event.target.parentElement.parentElement.getAttribute('data-postid');
 
     db.collection('Posts').doc(`${postId}`).get().then((doc) => {
       const docLikes = doc.data().likes;

@@ -16,6 +16,10 @@ const Post = (props) => {
     })
   };
 
+  const showLikesDetails = (event) => {
+    
+  }
+
   
 
   return (
@@ -34,14 +38,14 @@ const Post = (props) => {
           <div className={style.data}>
             <p className={style.heading}>Categoría: {props.category}</p>
             <p className={style.heading}>Autor: {props.author}</p>
-            <p className={style.heading}>Me gusta: {props.likes}</p>
+            <p className={style.heading}>Me gusta: {props.likes.length}</p>
             <p className={style.heading}>Publicado: {props.date}</p>
             <p className={style.contentArea}>{props.content}</p>
           </div>
         </div>
       </section>
       <div className={style.interactionContainer}>
-        <button onClick={(event) => {event.preventDefault(); props.clicked(event)}} className="custom-btn green-btn">Me gusta</button>
+        <button onClick={(event) => {event.preventDefault(); props.clicked(event)}} className={auth.currentUser !== null ? `custom-btn green-btn` : `inactive`}>Me gusta</button>
         <button className="custom-btn green-btn">Comentar</button>
         <button className="custom-btn green-btn">Compartir</button>
       </div>
