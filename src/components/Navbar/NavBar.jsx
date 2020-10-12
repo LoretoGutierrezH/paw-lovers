@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import style from './NavBar.module.css';
 import PawLovers from '../../assets/logoPawLovers.png';
@@ -15,6 +15,10 @@ const NavBar = (props) => {
   const openBurgerMenu = () => {
     burgerMenuState === 'closed' ? setBurgerMenuState('open') : setBurgerMenuState('closed');
   }
+
+  useContext(() => {
+
+  }, [])
 
   return (
     <nav className={style.navbar}>
@@ -41,6 +45,7 @@ const NavBar = (props) => {
           burgerMenuState === "closed" ? style.closedMenu : style.openMenu
         }
       >
+      <h1 onClick={() => setBurgerMenuState('closed')} className={style.closeBurgerIcon}>&times;</h1>
         <Link to="/">
           <li className="icon-container">
             <p>Inicio</p>
@@ -95,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar); 

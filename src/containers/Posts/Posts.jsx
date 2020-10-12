@@ -155,6 +155,15 @@ postsArray = postsState.map(post => {
   );
 })
 
+let whereTo = null;
+if (props.authenticated === false) {
+  whereTo = null;
+} else if (props.authenticated === true && props.match.params.category !== undefined) {
+  whereTo = <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link>;
+} else {
+  whereTo = <Link to="/nueva-publicación"><button className="custom-btn green-btn">Nueva publicación</button></Link>;
+}
+
 console.log(postsArray);
 
     return (
@@ -163,7 +172,7 @@ console.log(postsArray);
         <UpdatePostModal modalState={updateModalState} setModalState={setUpdateModalState} /* clicked={(event) => updateHandler(event)} */ successMessage={successState}/>
         <ConfirmationModal confirmationState={confirmationModalState} setConfirmationState={setConfirmationModalState} />
         <section className={style.newPostControl}>
-            {props.authenticated === true && props.match.params.category !== undefined ? <Link to={`${props.match.params.category}/nueva-publicación`}><button className="custom-btn green-btn">Nueva publicación</button></Link> : <Link to="/nueva-publicación"><button className="custom-btn green-btn">Nueva publicación</button></Link>}
+            {whereTo}
         </section>
         {postsArray}
     </main>

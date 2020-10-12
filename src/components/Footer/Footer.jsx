@@ -4,7 +4,7 @@ import style from './Footer.module.css';
 const Footer = (props) => {
   return (
     <footer className={style.footer}>
-      <p>Creado por Loreto Gutiérrez H.</p>
+      <p>v2.0 Implementada por Loreto Gutiérrez H.</p>
     </footer>
   );
 }
