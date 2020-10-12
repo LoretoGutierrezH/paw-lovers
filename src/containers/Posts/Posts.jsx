@@ -7,6 +7,7 @@ import { formattingDate } from './formattingDate.js';
 import { connect } from 'react-redux';
 import UpdatePostModal from '../UpdatePostModal/UpdatePostModal.jsx';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal.jsx';
+import * as actionTypes from '../../store/actionTypes';
 const db = firebase.firestore();
 const auth = firebase.auth();
 
@@ -20,6 +21,7 @@ const Posts = (props) => {
 
   //Para render de posts de index y por categoría con unsuscribe
   useEffect(() => {
+    props.closeBurgerMenu();
     let unsuscribe = null;
     let posts;
     if (window.location.pathname === "/") {
@@ -165,6 +167,7 @@ if (props.authenticated === false) {
 }
 
 console.log(postsArray);
+console.log(props.burgerState);
 
     return (
     <main className={style.postsContainer}>
@@ -182,9 +185,17 @@ console.log(postsArray);
 
 const mapStateToProps = (state) => {
     return {
-      authenticated: state.authenticated,
-      userId: state.userId
+      authenticated: state.authReducer.authenticated,
+      userId: state.authReducer.userId,
+      burgerState: state.burgerMenuReducer.burgerState
     }
-    }
+}
 
-export default connect(mapStateToProps)(Posts);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openBurgerMenu: () => dispatch({type: actionTypes.OPEN}),
+    closeBurgerMenu: () => dispatch({type: actionTypes.CLOSE})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

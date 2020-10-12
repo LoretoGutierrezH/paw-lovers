@@ -23,9 +23,9 @@ const ControlPanel = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userName: state.userName,
-    userId: state.userId,
-    userEmail: state.userEmail
+    userName: state.authReducer.userName,
+    userId: state.authReducer.userId,
+    userEmail: state.authReducer.userEmail
   }
 }
 export default connect(mapStateToProps)(ControlPanel);

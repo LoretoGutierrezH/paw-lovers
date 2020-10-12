@@ -8,8 +8,9 @@ import Posts from './containers/Posts/Posts.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Error404 from './components/Error404/Error404.jsx';
 import { connect } from 'react-redux';
-import * as actionTypes from './store/authActions';
+import * as actionTypes from './store/actionTypes';
 import firebase from './Firebase';
+
 
 const db = firebase.firestore();
 const auth = firebase.auth();
@@ -25,7 +26,10 @@ const App = (props) => {
         props.onActivateModal();
       }, 2000);
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      props.onFailedAuthentication(error.message);
+      console.log(error.message)
+    });
   }
 
   const signUpHandler = (event) => {
@@ -46,7 +50,10 @@ const App = (props) => {
         props.onActivateModal();
       }, 2000);
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      props.onFailedAuthentication(error.message);
+      console.log(error);
+    })
   }
 
   const signOutHandler = () => {
@@ -66,6 +73,7 @@ const App = (props) => {
         }, 3000);
         console.log('Sesión iniciada con Google correctamente');
       } catch (error) {
+        props.onFailedAuthentication(error.message);
         console.log(error);
       }
   };
@@ -116,15 +124,17 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.authenticated,
-    authModal: state.authModal
+    authenticated: state.authReducer.authenticated,
+    authModal: state.authReducer.authModal,
+    failedAuthMessage: state.authReducer.errorMessage
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuthenticate: (authValue, userName, userId, userEmail) => dispatch({type: actionTypes.AUTHENTICATE, value: authValue,  userName, userId, userEmail}),
-    onActivateModal: () => dispatch({type: actionTypes.ACTIVATE})
+    onActivateModal: () => dispatch({type: actionTypes.ACTIVATE}),
+    onFailedAuthentication: (errorMessage) => dispatch({type: actionTypes.FAILEDAUTH, value: errorMessage})
   }
 }
 

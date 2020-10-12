@@ -10,3 +10,15 @@
   margin-bottom: 1rem;
 }
 
+@media (min-width: 1024px) {
+  .newPostControl {
+    margin-top: 3rem;
+  }
+}
+
+
+@media (min-width: 1440px) {
+  .newPostControl {
+    margin-top: 5rem;
+  }
+}

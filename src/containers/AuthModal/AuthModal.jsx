@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import style from './AuthModal.module.css';
-import * as actionTypes from '../../store/authActions';
+import * as actionTypes from '../../store/actionTypes';
 import GoogleLogo from '../../assets/Google__G__Logo.svg';
 import { connect } from 'react-redux';
+import firebase from '../../Firebase';
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+
 const AuthModal = (props) => {
   const [formState, setFormState] = useState('sign-in');
 
@@ -12,6 +17,16 @@ const AuthModal = (props) => {
     } else {
       setFormState('sign-in');
     }
+  }
+
+  let firebaseInfoMessage = null;
+
+  {/* <p className={style.authenticationMessage}>{props.authenticated === true ? `Bienvenido a Paw Lovers, ${auth.currentUser.displayName}` : null}</p>
+  <p>{props.failedAuthMessage !== undefined ? props.failedAuthMessage : null}</p> */}
+  if (props.authenticated) {
+    firebaseInfoMessage = <p className={style.successMessage}>{`Bienvenido a Paw Lovers, ${auth.currentUser.displayName}`}</p>
+  } else if (props.authenticated === false && props.failedAuthMessage !== undefined) {
+    firebaseInfoMessage = <p className={style.failMessage}>{props.failedAuthMessage}</p>;
   }
 
   return (
@@ -37,7 +52,7 @@ const AuthModal = (props) => {
             <input type="password" name="password" placeholder="Contraseña" required />
             <button type="submit" className={`custom-btn green-btn ${style.btn}`}>Registrarse</button>
           </form>
-            <p className={style.authenticationMessage}>{props.authenticated === true ? 'Acción realizada correctamente' : null}</p>
+          {firebaseInfoMessage}
         </section>
       </section>
     </article>
@@ -46,8 +61,9 @@ const AuthModal = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.authenticated,
-    authModal: state.authModal
+    authenticated: state.authReducer.authenticated,
+    authModal: state.authReducer.authModal,
+    failedAuthMessage: state.authReducer.errorMessage
   }
 }
 

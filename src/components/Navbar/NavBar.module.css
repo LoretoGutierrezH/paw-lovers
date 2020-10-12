@@ -67,7 +67,23 @@ ul#burgerMenu > a > li:hover {
   margin-right: -23rem;
 }
 
+.closeBurgerIcon:hover {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
+  .logoContainer {
+    margin-left: 10rem;
+  }
+
+  .authenticationIcon {
+    margin-right: 10rem;
+  }
+
+  .burgerMenuIcon {
+    margin-right: 10rem;
+  }
+
   #burgerMenu {
     position: absolute;
     top: 5rem;
@@ -84,5 +100,15 @@ ul#burgerMenu > a > li:hover {
 
   .closeBurgerIcon {
     margin-right: -18rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logoContainer {
+    width: 15rem;
+  }
+
+  #burgerMenu {
+    top: 9rem;
   }
 }

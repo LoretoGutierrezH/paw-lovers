@@ -5,21 +5,11 @@ import PawLovers from '../../assets/logoPawLovers.png';
 import BurgerMenuIcon from '../../assets/menu.png';
 import AuthenticationIcon from '../../assets/user.png';
 import LogoutIcon from '../../assets/exit.png';
-import * as actionTypes from '../../store/authActions';
+import * as actionTypes from '../../store/actionTypes';
 import { connect } from 'react-redux';
 
 
 const NavBar = (props) => {
-  //Burger Menu State:
-  const [burgerMenuState, setBurgerMenuState] = useState('closed');
-  const openBurgerMenu = () => {
-    burgerMenuState === 'closed' ? setBurgerMenuState('open') : setBurgerMenuState('closed');
-  }
-
-  useContext(() => {
-
-  }, [])
-
   return (
     <nav className={style.navbar}>
       <Link to="/">
@@ -35,17 +25,17 @@ const NavBar = (props) => {
         <img src={LogoutIcon} alt="authentication icon" />
       </div>
 
-      <div onClick={openBurgerMenu} className={style.burgerMenuIcon}>
+      <div onClick={props.openBurgerMenu} className={style.burgerMenuIcon}>
         <img src={BurgerMenuIcon} alt="burger menu icon" />
       </div>
 
       <ul
         id={style.burgerMenu}
         className={
-          burgerMenuState === "closed" ? style.closedMenu : style.openMenu
+          props.burgerState === "closed" ? style.closedMenu : style.openMenu
         }
       >
-      <h1 onClick={() => setBurgerMenuState('closed')} className={style.closeBurgerIcon}>&times;</h1>
+      <h1 onClick={() => props.closeBurgerMenu()} className={style.closeBurgerIcon}>&times;</h1>
         <Link to="/">
           <li className="icon-container">
             <p>Inicio</p>
@@ -88,15 +78,18 @@ const NavBar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.authenticated,
-    authModal: state.authModal
+    authenticated: state.authReducer.authenticated,
+    authModal: state.authReducer.authModal,
+    burgerState: state.burgerMenuReducer.burgerState
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuthenticate: () => dispatch({type: actionTypes.AUTHENTICATE}),
-    onActivateModal: () => dispatch({type: actionTypes.ACTIVATE})
+    onActivateModal: () => dispatch({type: actionTypes.ACTIVATE}),
+    openBurgerMenu: () => dispatch({type: actionTypes.OPEN}),
+    closeBurgerMenu: () => dispatch({type: actionTypes.CLOSE})
   }
 }
 

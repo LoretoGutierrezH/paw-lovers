@@ -1,4 +1,6 @@
-import * as actionTypes from './authActions';
+import * as actionTypes from './actionTypes';
+import firebaseTranslate from '../FirebaseMessagesTranslated';
+
 const initialState = {
   authenticated: false,
   authModal: false
@@ -19,6 +21,14 @@ const authReducer = (state = initialState, action) => {
     return state = {
       ...state,
       authModal: state.authModal === false ? true : false
+    }
+  }
+
+  if (action.type === actionTypes.FAILEDAUTH) {
+    return state = {
+      ...state,
+      authenticated: false,
+      errorMessage: firebaseTranslate(action.value)
     }
   }
 

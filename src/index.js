@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import authReducer from './store/authReducer';
+import burgerMenuReducer from './store/burgerMenuReducer';
 import { Provider } from 'react-redux';
 
-const store = createStore(authReducer);
+const rootReducer = combineReducers({
+  authReducer,  
+  burgerMenuReducer
+})
+const store = createStore(rootReducer);
 ReactDOM.render(
   <Provider store={store}>
     <App />

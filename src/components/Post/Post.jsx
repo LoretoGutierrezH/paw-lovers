@@ -53,8 +53,8 @@ const Post = (props) => {
 }
 const mapStateToProps = (state) => {
   return {
-    authenticated: state.authenticated,
-    userId: state.userId
+    authenticated: state.authReducer.authenticated,
+    userId: state.authReducer.userId
   }
 }
 export default connect(mapStateToProps)(Post);

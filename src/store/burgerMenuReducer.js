@@ -1,4 +1,4 @@
-import * as actionTypes from './burgerMenuActions';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
   burgerState: 'closed'
