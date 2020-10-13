@@ -95,14 +95,14 @@ const App = (props) => {
         {/* {window.location.pathname === "/" ? <Redirect to="/inicio"></Redirect> : null} */}
         <Route path="/" component={Posts} exact />
         <Route path="/panel-de-control" component={ControlPanel}>
-          {!props.authenticated ? <Redirect to="/404"></Redirect> : console.log('AUTENTICADO')}
-        </Route>
-        <Route path="/404" component={Error404} exact/>
-        
+          {props.authenticated === false ? <Redirect to="/"></Redirect> : null}
+        </Route>    
         <Route path="/:category/nueva-publicación" component={NewPost}>
-          {!props.authenticated ? <Redirect to="/404"></Redirect> : null}
+          {props.authenticated === false ? <Redirect to="/"></Redirect> : null}
         </Route>
-        <Route path="/nueva-publicación" component={NewPost} />
+        <Route path="/nueva-publicación" component={NewPost}>
+        {props.authenticated === false ? <Redirect to="/"></Redirect> : null}
+        </Route>
 
         <Route path="/:category" component={Posts} />
         {/* <Route path="/tips" component={Posts} />

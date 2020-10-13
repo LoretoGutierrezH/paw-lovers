@@ -10,6 +10,8 @@ const auth = firebase.auth();
 const ControlPanel = (props) => {
   const [fileUrl, setFileUrl] = useState(auth.currentUser.photoURL !== null ? auth.currentUser.photoURL : AnonymousAvatar);
 
+  const [informationMessage, setInformationMessage] = useState(null);
+
 
   const onImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -23,7 +25,6 @@ const ControlPanel = (props) => {
     const newUserName = event.target.newusername.value;
     const newEmail = event.target.newemail.value;
     const currentPassword = event.target.currentpassword.value;
-    const newPassword = event.target.newpassword.value;
     auth.currentUser.updateProfile({
       displayName: newUserName,
       photoURL: fileUrl
@@ -32,29 +33,20 @@ const ControlPanel = (props) => {
       console.log(auth.currentUser);
     })
 
-    //updating email and/or password
-    updateEmailAndPassword(newEmail, newPassword, currentPassword);
-  }
-
-  const updateEmailAndPassword = (newEmail, newPassword, currentPassword) => {
+    //updating email 
     credentialsVerification(currentPassword)
     .then(() => {
-      if (newEmail !== "" && newPassword !== "") {
-        auth.currentUser.updateEmail(newEmail);
-        auth.currentUser.updatePassword(newPassword);
-      } else if (newEmail !== "") {
-        auth.currentUser.updateEmail(newEmail);
-      } else if (newPassword !== "") {
-        auth.currentUser.updatePassword(newPassword);
-      }
+      auth.currentUser.updateEmail(newEmail);
     })
-    .then(() => {
-      console.log('Se actualizó la información.');
+    .then (() => {
+      setInformationMessage('Se actualizó la información correctamente. Podrás ver los cambios al refrescar la página.');
     })
     .catch(error => {
-      console.log('Se produjo un error:', error.message);
+      setInformationMessage(`${error.message}`);
     })
   }
+
+  
 
   const credentialsVerification = (currentPassword) => {
     const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, currentPassword);
@@ -72,11 +64,13 @@ const ControlPanel = (props) => {
         <input type="file" onChange={(event) => onImageUpload(event)} />
         <p>{auth.currentUser.displayName}</p>
         <input type="text" name="newusername" placeholder="Nuevo nombre de usuario"  />
+        <p>{auth.currentUser.email}</p>
         <input type="email" name="newemail" placeholder="Nuevo correo" />
-        <input type="password" name="newpassword" placeholder="Nueva contraseña" />
         <input type="password" name="currentpassword" placeholder="Contraseña actual" />
         <button type="submit" className="custom-btn green-btn">Guardar</button>
-      </form> 
+      </form>
+      <p style={{color: "#8BC34A",
+    textAlign: "center", fontWeight: "bold"}}>{informationMessage}</p>
     </main>
   );
 }

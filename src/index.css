@@ -58,6 +58,10 @@ p {
   display: none;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .greyOption {
   color: grey;
 }
