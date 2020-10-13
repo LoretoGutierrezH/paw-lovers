@@ -17,8 +17,8 @@ const auth = firebase.auth();
 const App = (props) => {
   // Basic authentication
   const signInHandler = (event) => {
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const email = event.target.signinemail.value;
+    const password = event.target.signinpassword.value;
     auth.signInWithEmailAndPassword(`${email}`, `${password}`)
     .then(credentials => {
       props.onAuthenticate(true);
@@ -33,9 +33,9 @@ const App = (props) => {
   }
 
   const signUpHandler = (event) => {
-    const userName = event.target['user_name'].value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const userName = event.target['signup-username'].value;
+    const email = event.target.signupemail.value;
+    const password = event.target.signuppassword.value;
     auth.createUserWithEmailAndPassword(`${email}`, `${password}`)
     .then(credentials => {
       credentials.user.updateProfile({

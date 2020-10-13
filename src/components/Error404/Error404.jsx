@@ -18,7 +18,7 @@ const Error404 = (props) => {
           Te invitamos a
           registrarte para interactuar con otros usuarios.
         </p>
-        <Link to="/inicio">Volver a la página principal</Link>
+        <Link to="/">Volver a la página principal</Link>
       </article>
     </main>
   );
