@@ -44,7 +44,7 @@ const Post = (props) => {
         </div>
       </section>
       <div className={style.interactionContainer}>
-        <button onClick={(event) => {event.preventDefault(); props.clicked(event)}} className={auth.currentUser !== null ? `custom-btn green-btn` : `inactive`}>Me gusta/Ya no me gusta</button>
+        <button onClick={(event) => {event.preventDefault(); props.clicked(event)}} className={auth.currentUser !== null ? `custom-btn green-btn` : `inactive`}>Me gusta</button>
         <button className="custom-btn green-btn">Comentar</button>
         <button className="custom-btn green-btn">Compartir</button>
       </div>
