@@ -10,7 +10,7 @@ Esta es la versión 2.0 de Paw Lovers, una red social para amantes de los animal
 ![Perfil](./src/assets/paw2.png)
 
 
-Por el momento sus funcionalidades son las siguientes:
+### Por el momento sus funcionalidades son las siguientes:
 
 *Crear cuenta de usuario con correo y contraseña
 
@@ -30,7 +30,7 @@ Por el momento sus funcionalidades son las siguientes:
 
 *Responsive (portrait mobile, tablet, desktop)
 
-Tecnologías utilizadas:
+### Tecnologías utilizadas:
 
 *HTML5
 
