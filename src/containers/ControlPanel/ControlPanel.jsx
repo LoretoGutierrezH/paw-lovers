@@ -66,7 +66,7 @@ const ControlPanel = (props) => {
         <input type="text" name="newusername" placeholder="Nuevo nombre de usuario"  />
         <p>{auth.currentUser.email}</p>
         <input type="email" name="newemail" placeholder="Nuevo correo" />
-        <input type="password" name="currentpassword" placeholder="Contraseña actual" />
+        <input type="password" name="currentpassword" placeholder="Contraseña actual" required />
         <button type="submit" className="custom-btn green-btn">Guardar</button>
       </form>
       <p style={{color: "#8BC34A",

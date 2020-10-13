@@ -48,7 +48,7 @@ ul#burgerMenu > a {
 }
 
 ul#burgerMenu > a > li {
-  padding: 2.5rem;
+  padding: 2rem;
 }
 
 ul#burgerMenu > a > li:hover {
