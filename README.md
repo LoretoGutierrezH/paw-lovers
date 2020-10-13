@@ -2,6 +2,13 @@ Paw Lovers [Create React App](https://github.com/facebook/create-react-app).
 
 Esta es la versión 2.0 de Paw Lovers, una red social para amantes de los animales.
 
+
+
+![Inicio](./src/assets/paw1.png)
+![Autenticación](./src/assets/paw3.png)
+![Perfil](./src/assets/paw2.png)
+
+
 Por el momento sus funcionalidades son las siguientes:
 
 *Crear cuenta de usuario con correo y contraseña
