@@ -1,7 +1,6 @@
-Paw Lovers [Create React App](https://github.com/facebook/create-react-app).
+Paw Lovers [haz clic aquí para ir a la aplicación](https://paw-lovers-2.web.app/).
 
 Esta es la versión 2.0 de Paw Lovers, una red social para amantes de los animales.
-
 
 
 ![Inicio](./src/assets/paw1.png)
@@ -13,7 +12,7 @@ Por el momento sus funcionalidades son las siguientes:
 
 *Crear cuenta de usuario con correo y contraseña
 *Iniciar sesión con correo y contraseña o la cuenta de Google
-*Ver publicacione
+*Ver publicaciones sin necesidad de iniciar sesión
 *Crear publicaciones (solo usuarios conectados)
 *Editar publicaciones (solo permitido para el autor de la publicación)
 *Eliminar publicaciones (solo permitido para el autor de la publicación)
@@ -30,5 +29,5 @@ Tecnologías utilizadas:
 *Redux
 *Firebase
 
-Para ver la versión 1.0 de Paw Lovers [haz clic aquí](https://lirizo.github.io/SCL013-social-network/src/index.html#/mas-sobre-PL)
+Para ver la versión 1.0 de Paw Lovers (con Vanilla JS) [haz clic aquí](https://lirizo.github.io/SCL013-social-network/src/index.html#/mas-sobre-PL)
 
