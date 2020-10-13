@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2d6d33a9.chunk.css",
+    "main.js": "/static/js/main.e6f62d64.chunk.js",
+    "main.js.map": "/static/js/main.e6f62d64.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4d6f7b0e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4d6f7b0e.js.map",
+    "static/js/2.41476c8c.chunk.js": "/static/js/2.41476c8c.chunk.js",
+    "static/js/2.41476c8c.chunk.js.map": "/static/js/2.41476c8c.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.fd22754117ce353fa754109a30758e15.js": "/precache-manifest.fd22754117ce353fa754109a30758e15.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.2d6d33a9.chunk.css.map": "/static/css/main.2d6d33a9.chunk.css.map",
+    "static/js/2.41476c8c.chunk.js.LICENSE.txt": "/static/js/2.41476c8c.chunk.js.LICENSE.txt",
+    "static/media/Google__G__Logo.svg": "/static/media/Google__G__Logo.f6ce5696.svg",
+    "static/media/Paw.png": "/static/media/Paw.bfee87e0.png",
+    "static/media/anonymous.png": "/static/media/anonymous.1dcef966.png",
+    "static/media/logoPawLovers.png": "/static/media/logoPawLovers.4d481848.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4d6f7b0e.js",
+    "static/js/2.41476c8c.chunk.js",
+    "static/css/main.2d6d33a9.chunk.css",
+    "static/js/main.e6f62d64.chunk.js"
+  ]
+}

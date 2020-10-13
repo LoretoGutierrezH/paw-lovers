@@ -25,7 +25,7 @@ const NavBar = (props) => {
         <img src={LogoutIcon} alt="authentication icon" />
       </div>
 
-      <div onClick={props.openBurgerMenu} className={style.burgerMenuIcon}>
+      <div onClick={props.burgerState === 'closed' ? props.openBurgerMenu : props.closeBurgerMenu} className={style.burgerMenuIcon}>
         <img src={BurgerMenuIcon} alt="burger menu icon" />
       </div>
 

@@ -15,6 +15,9 @@ const firebaseTranslate = (message) => {
     case "The email address is badly formatted.":
       return "El correo tiene un formato no permitido";
       break;
+    case "The popup has been closed by the user before finalizing the operation.":
+      return "El usuario cerró la ventana antes de finalizar el inicio de sesión con Google.";
+      break;
     default: {
       return message;
     }
